@@ -62,7 +62,7 @@ class Particle:
         self.x = x
         self.y = y
         self.size = size
-        self.colour = (200 - density * 10, 200 - density * 10, 255)
+        self.colour = (200 - density * 10, 200 - density * 10, 200 - density * 10)
         self.thickness = 3
         self.speed = 0.1
         self.angle = 0
@@ -80,7 +80,6 @@ class Particle:
         self.x += math.sin(self.angle) * self.speed
         self.y -= math.cos(self.angle) * self.speed
         self.speed *= self.drag
-        #self.speed *= elasticity
 
 
     def bounce(self):
@@ -101,7 +100,7 @@ class Particle:
 
 
 
-number_of_particles = 2
+number_of_particles = 20
 my_particles = []
 
 
