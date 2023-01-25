@@ -123,15 +123,15 @@ while running:
             particle.bounce()
         particle.display()
 
-        if selected_particle:
-            mouseX = pygame.mouse.get_pos()[0]
-            mouseY = pygame.mouse.get_pos()[1]
-            dx = mouseX - selected_particle.x
-            dy = mouseY - selected_particle.y
-            selected_particle.angle = 0.5 * math.pi + math.atan2(dy,dx) 
-            selected_particle.speed = math.hypot(dx, dy) * 0.01
-            #selected_particle.x = mouseX
-            #selected_particle.y = mouseY
+    if selected_particle:
+        mouseX = pygame.mouse.get_pos()[0]
+        mouseY = pygame.mouse.get_pos()[1]
+        dx = mouseX - selected_particle.x
+        dy = mouseY - selected_particle.y
+        selected_particle.angle = 0.5 * math.pi + math.atan2(dy,dx) 
+        selected_particle.speed = math.hypot(dx, dy) * 0.01
+        selected_particle.x = dx 
+        selected_particle.y = dy 
 
     
     pygame.display.update()
