@@ -21,9 +21,8 @@ class Object:
 
 
     def load_image(self):
-        "Load an image from a privte file present in a subdirectory"
-        self.image.append(pygame.image.load(os.path.join("Documents\GitHub\Projet_M2_Lumi\Photos_Materiel","laser.png")).convert_alpha())
-        #self.image.append(pygame.image.load("Photos_Materiel\laser.png").convert_alpha())
+        "Load an image from a privte file present in a subdirectory"        
+        self.image.append(pygame.image.load(os.getcwd()+"\Photos_Materiel\laser.png").convert_alpha())
 
 
     def draw(self):
