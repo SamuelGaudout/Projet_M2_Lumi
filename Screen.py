@@ -1,10 +1,28 @@
 import pygame
 
+#création de l'interface graphique avec pygame
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Optics Elements')
-background_colour = (250,20,75)
+background_colour = (200,200,200)
 screen.fill(background_colour)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 pygame.display.flip()
