@@ -100,7 +100,7 @@ class Particle:
 
 
 
-number_of_particles = 20
+number_of_particles = 100
 my_particles = []
 
 
