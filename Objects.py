@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import os
+import Buttons
 
 #création de l'interface graphique avec pygame
 (width, height) = (800, 600)
@@ -33,9 +34,17 @@ class Object:
 
 l1=Object()
 
-
+button1 = Buttons.Button(
+    "Click here",
+    (100, 100),
+    font=30,
+    scrn=screen,
+    bg="navy",
+    feedback="You clicked me")
 pygame.display.flip()
 running = True
+
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -43,6 +52,9 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             l1.load_image()
             l1.draw()
+        button1.click(event)
+    screen.blit(button1.surface, (100,100))
+        
 
 
 
