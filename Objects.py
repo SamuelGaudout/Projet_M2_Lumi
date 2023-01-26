@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-import sys
 import os
 import Buttons
 
@@ -21,9 +20,10 @@ class Object:
         self.image = [] # image sequence
 
 
-    def load_image(self):
-        "Load an image from a privte file present in a subdirectory"        
-        self.image.append(pygame.image.load(os.getcwd()+"\Photos_Materiel\laser.png").convert_alpha())
+    def load_image(self,path_image):
+        "Load an image from a privte file present in a subdirectory"
+        path=os.getcwd()+path_image     
+        self.image.append(pygame.image.load(path).convert_alpha())
 
 
     def draw(self):
@@ -32,15 +32,27 @@ class Object:
         screen.blit(self.image[0], self.pos)
         pass
 
-l1=Object()
+
+class Laser(Object):
+    "Laser object"
+    def __init__(self, pos=(0,0), current=0):
+        Object.__init__(self, pos, current)
+        self.pathIm="\Photos_Materiel\laser.png"
+        self.load_image(self.pathIm)
+    
+
+
+l1=Laser()
 
 button1 = Buttons.Button(
-    "Click here",
-    (100, 100),
+    "Laser",
+    (10, 10),
     font=30,
     scrn=screen,
     bg="navy",
     feedback="You clicked me")
+
+
 pygame.display.flip()
 running = True
 
@@ -50,10 +62,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            l1.load_image()
             l1.draw()
         button1.click(event)
-    screen.blit(button1.surface, (100,100))
+    screen.blit(button1.surface, (10,10))
         
 
 
