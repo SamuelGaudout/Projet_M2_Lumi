@@ -88,7 +88,7 @@ Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="
 def select_object(o_elements,x,y):
     print(optical_elements)
     for e in o_elements:
-        print(e.define_size()[0])
+        print(e.position()[0])
         if e.position()[0]<=x<=e.position()[0]+e.define_size()[0] and e.position()[1]<=y<=e.position()[1]+e.define_size()[1]:
             print("Trouvé!!")
             return e
@@ -101,6 +101,9 @@ selected_object = None
 while running:
     for b in list_buttons:
         screen.blit(b.surface, b.position())
+    if len(optical_elements) != 0:
+        for e in optical_elements:
+            e.draw()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
