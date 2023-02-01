@@ -1,4 +1,5 @@
 import pygame
+import Objects
 
 pygame.init()
 font = pygame.font.SysFont("Arial", 20)
