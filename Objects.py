@@ -8,7 +8,7 @@ import math
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Optics Elements')
-background_colour = (200,200,200)
+background_colour = (200,200,200,0)
 screen.fill(background_colour)
 
 
@@ -36,12 +36,16 @@ class Object:
         #self.image.append(pygame.image.load(path).convert_alpha())
         self.image.append(pygame.image.load(path))
 
-    def display(self):
+    def display(self,X,Y):
         "Display the object"
+        xrect=self.position()[0]
+        yrect=self.position()[1]
+        pygame.draw.rect(screen,background_colour,(xrect,yrect,self.size[1],self.size[0]))
+        self.pos=(X,Y)
         screen.blit(self.image[0], self.pos)
 
     def draw(self):
-        self.pos=(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
+        #self.pos=(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
         screen.blit(self.image[0], self.pos)
 
 
@@ -112,8 +116,13 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             selected_object = None
     
+    
+
     if selected_object:
-        selected_object.draw()
+        mouseX=pygame.mouse.get_pos()[0]
+        mouseY=pygame.mouse.get_pos()[1]
+        selected_object.display(mouseX, mouseY)
+        
 
     pygame.display.update()
         
