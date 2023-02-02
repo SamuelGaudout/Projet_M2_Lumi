@@ -27,7 +27,7 @@ Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="
 def select_object(o_elements,x,y):
     print(optical_elements)
     for e in o_elements:
-        print(e.position()[0])
+        print(e.define_size()[0])
         if e.position()[0]<=x<=e.position()[0]+e.define_size()[0] and e.position()[1]<=y<=e.position()[1]+e.define_size()[1]:
             print("Trouvé!!")
             return e
@@ -38,6 +38,7 @@ running = True
 selected_object = None
 
 while running:
+    
     for b in list_buttons:
         screen.blit(b.surface, b.position())
         list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
@@ -65,12 +66,15 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             selected_object = None
     
+    b=Objects.Beam(screen,object_list=optical_elements)
+    b.beam_lines(color='red')
     
-
     if selected_object:
         mouseX=pygame.mouse.get_pos()[0]
         mouseY=pygame.mouse.get_pos()[1]
+        b.beam_lines(color='erase')
         selected_object.display(mouseX, mouseY)
         
-
+        
+        
     pygame.display.update()
