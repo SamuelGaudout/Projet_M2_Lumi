@@ -67,14 +67,14 @@ while running:
             selected_object = None
     
     b=Objects.Beam(screen,object_list=optical_elements)
-    b.beam_lines(color='red')
+    b.beam_lines_laser(color='red')
     
     if selected_object:
         mouseX=pygame.mouse.get_pos()[0]
         mouseY=pygame.mouse.get_pos()[1]
-        b.beam_lines(color='erase')
+        b.beam_lines_laser(color='erase')
         selected_object.display(mouseX, mouseY)
+        b.beam_lines_laser(color='red')
         
         
-        
-    pygame.display.update()
+    pygame.display.flip()
