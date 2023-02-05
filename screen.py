@@ -4,7 +4,7 @@ import Buttons
 
 
 #création de l'interface graphique avec pygame
-(width, height) = (800, 600)
+(width, height) = (1000, 800)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Optics Elements')
 background_colour = (200,200,200,0)
@@ -18,7 +18,6 @@ optical_elements = []
 
 
 list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
-Buttons.Button("Laser",(10, 300),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
 Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements)]
@@ -42,7 +41,6 @@ while running:
     for b in list_buttons:
         screen.blit(b.surface, b.position())
         list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
-                Buttons.Button("Laser",(10, 300),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
                 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
                 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
                 Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements)]

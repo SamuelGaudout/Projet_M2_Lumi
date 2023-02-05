@@ -67,6 +67,7 @@ class Beam():
         start_pos=end_pos
         object.action_beam(end_pos[0],end_pos[1])
 
+
     def beam_lines_laser(self,color):
         "Draw the beam lines"
         if color=='red':
@@ -77,14 +78,17 @@ class Beam():
         if len(self.laser_list) !=0:
             for l in self.laser_list:
                 start_pos=(l.position()[0],l.position()[1]+l.size[0]/2)
-                for o in self.object_list:
-                    if o.type!=TYPE_LASER:
-                        if o.position()[1]<l.position()[1]+l.size[0]/2<o.position()[1]+o.size[0]:
-                            end_pos=(o.position()[0]+l.size[1]/2,l.position()[1]+l.size[0]/2)
+                for i in range(len(self.object_list)):
+                    if self.object_list[i].type!=TYPE_LASER:
+                        if self.object_list[i].position()[1]<l.position()[1]+l.size[0]/2<self.object_list[i].position()[1]+self.object_list[i].size[0]:
+                            end_pos=(self.object_list[i].position()[0]+l.size[1]/2,l.position()[1]+l.size[0]/2)
                             pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
+                            self.object_list[i].action_beam(beamxIn=end_pos[0],beamyIn=end_pos[1],color=color)
                             start_pos=end_pos
-                            o.action_beam(end_pos[0],end_pos[1],color)
-
+                            for j in range(i+1,len(self.object_list)):
+                                if self.object_list[i].type!=TYPE_LASER:
+                                    pass
+                            
                         else :
                             end_pos=(l.position()[0]-1000,l.position()[1]+l.size[0]/2)
                             pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
@@ -108,11 +112,21 @@ class Flat_mirror(Object):
     "Mirror object"
     def __init__(self,scr, pos=(0,0), current=0):
         Object.__init__(self,scr,pos, current)
-        self.pathIm="\Photos_Materiel\lat_mirror.jpg"
+        self.pathIm="\Photos_Materiel\lat_mirror7.jpg"
         self.load_image(self.pathIm)
         self.type=TYPE_FLAT_MIRROR
     
-    def action_beam(self,beamxIn,beamyIn):
+    def action_beam(self,beamxIn,beamyIn,BeamRend=800,color=(250,0,0)):
+        "reflect the beam"
+        start_pos1=(beamxIn,beamyIn) #star of the beam (to the mirror inside the image)
+        start_pos2=(beamxIn-(beamyIn-self.position()[1])-12,beamyIn) #start position of the reflected beam
+        end_pos1=(beamxIn-(beamyIn-self.position()[1])-12,beamyIn) #end position of the beam (to the mirror inside the image)
+        end_pos2=(beamxIn-(beamyIn-self.position()[1])-12,BeamRend) #end position of the reflected beam
+        pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
+        pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
+
+
+
         pass
 
 class Curve_mirror(Object):
@@ -122,7 +136,7 @@ class Curve_mirror(Object):
         self.pathIm="\Photos_Materiel\curve_mirror.jpg"
         self.load_image(self.pathIm)
         self.type=TYPE_CURVE_MIRROR
-    def action_beam(self,beamxIn,beamyIn):
+    def action_beam(self,beamxIn,beamyIn,color=(250,0,0)):
         pass
 
 class Beam_splitter(Object):
@@ -133,15 +147,12 @@ class Beam_splitter(Object):
         self.load_image(self.pathIm)   
         self.type=TYPE_BEAM_SPLITTER
 
-    def action_beam(self,beamxIn,beamyIn, color=(250,0,0)):
+    def action_beam(self,beamxIn,beamyIn,BeamTRend=0,BeamRend=0, color=(250,0,0)):
         "Split the beam in two"
-
         start_pos1=(beamxIn,beamyIn) #start position of the transmitted beam
-        #start_pos2=(self.position()[0]+self.size[1]/2,self.position()[1]) #start position of the reflected beam
         start_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),beamyIn) #start position of the reflected beam
-        end_pos1=(0,beamyIn)
-        #end_pos2=(self.position()[0]+self.size[1]/2,0)
-        end_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),0)
+        end_pos1=(BeamTRend,beamyIn) #end position of the transmitted beam
+        end_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),BeamRend) #end position of the reflected beam
         pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
         pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
 
