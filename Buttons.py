@@ -9,7 +9,7 @@ font = pygame.font.SysFont("Arial", 20)
 class Button:
     """Create a button, then blit the surface in the while loop"""
  
-    def __init__(self, text,  pos, font,scrn, bg="black", feedback="",object=None,object_list=None,object=None,object_list=None):
+    def __init__(self, text,  pos, font,scrn, bg="black", feedback="",object=None,object_list=None):
         self.x, self.y = pos
         self.font = pygame.font.SysFont("Arial", font)
         self.screen = scrn
