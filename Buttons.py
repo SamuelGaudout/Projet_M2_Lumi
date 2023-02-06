@@ -1,5 +1,6 @@
 import runpy
 import pygame
+import Objects
 
 
 pygame.init()
@@ -8,10 +9,12 @@ font = pygame.font.SysFont("Arial", 20)
 class Button:
     """Create a button, then blit the surface in the while loop"""
  
-    def __init__(self, text,  pos, font,scrn, bg="black", feedback="",object=None,object_list=None):
+    def __init__(self, text,  pos, font,scrn, bg="black", feedback="",object=None,object_list=None,object=None,object_list=None):
         self.x, self.y = pos
         self.font = pygame.font.SysFont("Arial", font)
         self.screen = scrn
+        self.object=object
+        self.object_list=object_list
         self.object=object
         self.object_list=object_list
         if feedback == "":
@@ -19,6 +22,19 @@ class Button:
         else:
             self.feedback = feedback
         self.change_text(text, bg)
+
+    def position(self):
+        return (self.x, self.y)
+
+    def optical_element(self):
+        return self.object
+    
+    def draw_object(self):
+        self.object.pos=(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]+100)
+        self.screen.blit(self.object.image[0], self.object.pos)
+        self.object_list.append(self.object)
+        
+
 
     def position(self):
         return (self.x, self.y)
@@ -50,6 +66,9 @@ class Button:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     self.draw_object()
+                    
+ 
+
 
 class Button_Launch(Button):
     def launch_Screen(self):
