@@ -1,5 +1,5 @@
 import pygame
-import sys
+import sys, os
 import Buttons
 from pygame.locals import *
 
@@ -7,7 +7,8 @@ pygame.init()
 
 
 
-icon_32x32 = pygame.image.load("C:\\Users\\not-a\\Desktop\\Interface\\IMage.png")
+# icon_32x32 = pygame.image.load("C:\\Users\\not-a\\Desktop\\Interface\\IMage.png")
+icon_32x32 = pygame.image.load(os.getcwd()+"\Photos_Materiel\laser.png")
 
 #Taille fenetre
 windowSurface = pygame.display.set_mode((1080, 720), 0, 32)
@@ -19,7 +20,8 @@ pygame.display.set_icon(icon_32x32)
 pygame.display.set_caption('Application')
 
 #fond de la fenetre
-background = pygame.image.load("C:\\Users\\not-a\\Desktop\\Interface\\IMage.png")
+#background = pygame.image.load("C:\\Users\\not-a\\Desktop\\Interface\\IMage.png")
+background = pygame.image.load(os.getcwd()+"\Photos_Materiel\laser.png")
 background = pygame.transform.scale(background, (1233, 925))
 #texte
 font = pygame.font.SysFont("Verdana", 72)
