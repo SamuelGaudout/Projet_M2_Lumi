@@ -20,7 +20,8 @@ optical_elements = []
 list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
-Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements)]
+Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements),
+Buttons.Button("Fiber",(550, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Fiber(screen),object_list=optical_elements)]
 
 
 def select_object(o_elements,x,y):
@@ -43,7 +44,8 @@ while running:
         list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
                 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
                 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
-                Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements)]
+                Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements),
+                Buttons.Button("Fiber",(550, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Fiber(screen),object_list=optical_elements)]
 
     
     if len(optical_elements) != 0:
