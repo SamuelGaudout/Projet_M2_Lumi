@@ -7,7 +7,7 @@ pygame.init()
 
 
 
-icon_32x32 = pygame.image.load(os.getcwd()+"Photos_Materiel\Image.png")
+icon_32x32 = pygame.image.load(os.getcwd()+"\Photos_Materiel\Image.png")
 
 
 #Taille fenetre
@@ -20,7 +20,7 @@ pygame.display.set_icon(icon_32x32)
 pygame.display.set_caption('Application')
 
 #fond de la fenetre
-background = pygame.image.load(os.getcwd()+"Photos_Materiel\Image.png")
+background = pygame.image.load(os.getcwd()+"\Photos_Materiel\Image.png")
 
 background = pygame.transform.scale(background, (1233, 925))
 #texte

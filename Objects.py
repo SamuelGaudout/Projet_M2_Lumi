@@ -17,11 +17,16 @@ class Object:
         self.pos = pos # position of the object
         self.current = current # current through the object
         self.size=size # size of the object
-        self.image = [] # image sequence        
+        self.image = [] # image sequence     
+        self.direction=0 # direction of the beam   
 
     def position(self):
         "Return the position of the object"
         return self.pos
+
+    def dir(self):
+        "Return the direction of the object"
+        return self.direction
     
     def define_size(self):
         "Return the size of the object"
@@ -31,8 +36,12 @@ class Object:
     def load_image(self,path_image):
         "Load an image from a privte file present in a subdirectory"
         path=os.getcwd()+path_image     
-        #self.image.append(pygame.image.load(path).convert_alpha())
         self.image.append(pygame.image.load(path))
+    
+    def rotate_object(self,angle=0):
+        "Rotate the object"
+        self.image[0]=pygame.transform.rotate(self.image[0],angle)
+        self.direction+=1
 
     def display(self,X,Y):
         "Display the object"
@@ -45,6 +54,49 @@ class Object:
     def draw(self):
         self.screen.blit(self.image[0], self.pos)
 
+    
+        
+
+
+class Beam1():
+    "Create the beam for the different optical elements"
+    def __init__(self,scr,object_list=None):
+        self.screen=scr
+        self.object_list=object_list
+        self.laser_list=[]
+
+    def fill_laser_list(self):
+        "Fill the laser list with the laser objects"
+        for l in self.object_list:
+            if l.type==TYPE_LASER:
+                self.laser_list.append(l)
+
+    def check_intercept_objects(self,xpos_beam,ypos_beam,direction='left'):
+        "Check if the beam is incountering an object"
+        o=0
+        object_intercepted=[]
+        if direction=='right' or direction=='left':
+            for i in range(len(self.object_list)):
+                if self.object_list[i].position()[1]<ypos_beam<self.object_list[i].position()[1]+self.object_list[i].size[0]:
+                    o=+1
+                    object_intercepted.append(self.object_list[i])
+        elif direction=='up' or direction=='down':
+            for i in range(len(self.object_list)):
+                if self.object_list[i].position()[0]<xpos_beam<self.object_list[i].position()[0]+self.object_list[i].size[1]:
+                    o=+1
+                    object_intercepted.append(self.object_list[i])
+        if o>0:       
+            return True,object_intercepted
+        else:
+            return False,None
+
+
+    def beam_line(self,obj,direction='left',color=(250,0,0)):
+        "Draw the beam line coming from an object"
+        if direction=='left':
+            start_pos=(obj.position()[0],obj.position()[1]+obj.size[0]/2)
+            obj.action_beam(start_pos[0],start_pos[1],color=color)
+
 
 
 
@@ -53,7 +105,6 @@ class Beam():
     def __init__(self,scr,object_list=None):
         self.screen=scr
         self.object_list=object_list
-        #self.dirs=utils.Stack()
         self.laser_list=[]
 
     def fill_laser_list(self):
@@ -93,39 +144,12 @@ class Beam():
                 start_pos=(l.position()[0],l.position()[1]+l.size[0]/2)
                 if self.check_beam_line(l)[0]==True:
                     end_pos=self.check_beam_line(l)[1][0].position()    
-                    l.action_beam(start_pos[0],start_pos[1],end_pos[0]+self.check_beam_line(l)[1][0].define_size()[1],color=color)
-                    #self.check_beam_line(l)[1][0].action_beam(end_pos[0],end_pos[1],color=color)
+                    l.action_beam(beamxend=((-1)**(l.dir()+1))*(end_pos[0]+self.check_beam_line(l)[1][0].define_size()[1]),color=color)
                     self.beam_line_objects(l,self.check_beam_line(l)[1][0],color=color)
                 else :
-                    end_pos=(l.position()[0]-1000,l.position()[1]+l.size[0]/2)
-                    l.action_beam(start_pos[0],start_pos[1],color=color)
-                    start_pos=end_pos
+                    l.action_beam(color=color)
 
                     
-
-
-
-
-                # for i in range(len(self.object_list)):
-                #     if self.object_list[i].type!=TYPE_LASER:
-                #         if self.object_list[i].position()[1]<l.position()[1]+l.size[0]/2<self.object_list[i].position()[1]+self.object_list[i].size[0] and self.object_list[i].type!=TYPE_LASER:
-                #             end_pos=(self.object_list[i].position()[0]+self.object_list[i].define_size()[1],l.position()[1]+l.size[0]/2)
-                #             pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
-                #             self.object_list[i].action_beam(beamxIn=end_pos[0],beamyIn=end_pos[1],color=color)
-                #             start_pos=end_pos
-                #             for j in range(i+1,len(self.object_list)):
-                #                 if self.object_list[i].type!=TYPE_LASER:
-                #                     pass
-                            
-                #         else :
-                #             end_pos=(l.position()[0]-1000,l.position()[1]+l.size[0]/2)
-                #             pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
-                #             start_pos=end_pos
-
-    
-
-
-
 
 class Laser(Object):
     "Laser object"
@@ -138,11 +162,24 @@ class Laser(Object):
     def TYPE(self):
         return self.type
 
-    def action_beam(self,beamxIn,beamyIn,beamxend=0,color=(250,0,0)):
+    def action_beam(self,beamxend=1000,beamyend=1000,color=(250,0,0)):
         "Draw the beam"
-        start_pos=(beamxIn,beamyIn)
-        end_pos=(beamxend,beamyIn)
-        pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
+        if self.direction in range(0,10000,4):
+            start_pos=(self.position()[0],self.position()[1]+self.size[0]/2)
+            end_pos=(-beamxend,self.position()[1]+self.size[0]/2)
+            pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
+        elif self.direction in range(1,10000,4):
+            start_pos=(self.position()[0]+self.size[1]/2,self.position()[1]+self.size[0])
+            end_pos=(self.position()[0]+self.size[1]/2,beamyend)
+            pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
+        elif self.direction in range(2,10000,4):
+            start_pos=(self.position()[0]+self.size[1],self.position()[1]+self.size[0]/2)
+            end_pos=(beamxend,self.position()[1]+self.size[0]/2)
+            pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
+        elif self.direction in range(3,10000,4):
+            start_pos=(self.position()[0]+self.size[1]/2,self.position()[1])
+            end_pos=(self.position()[0]+self.size[1]/2,-beamyend)
+            pygame.draw.line(self.screen, color, start_pos, end_pos, 2)
 
     
 class Flat_mirror(Object):
@@ -158,25 +195,13 @@ class Flat_mirror(Object):
     
     def action_beam(self,beamxIn,beamyIn,BeamRend=8000,color=(250,0,0)):
         "reflect the beam"
-        start_pos1=(beamxIn,beamyIn) #star of the beam (to the mirror inside the image)
-        start_pos2=(beamxIn-(beamyIn-self.position()[1]),beamyIn) #start position of the reflected beam
-        end_pos1=(beamxIn-(beamyIn-self.position()[1]),beamyIn) #end position of the beam (to the mirror inside the image)
-        end_pos2=(beamxIn-(beamyIn-self.position()[1]),BeamRend) #end position of the reflected beam
-        pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
-        pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
-        pass
-
-class Curve_mirror(Object):
-    "Mirror object"
-    def __init__(self, scr,pos=(0,0), current=0):
-        Object.__init__(self,scr, pos, current)
-        self.pathIm="\Photos_Materiel\curve_mirror.jpg"
-        self.load_image(self.pathIm)
-        self.type=TYPE_CURVE_MIRROR
-
-    def TYPE(self):
-        return self.type
-    def action_beam(self,beamxIn,beamyIn,color=(250,0,0)):
+        if self.direction in range(0,10000,2):
+            start_pos1=(beamxIn,beamyIn) #star of the beam (to the mirror inside the image)
+            start_pos2=(beamxIn-(beamyIn-self.position()[1]),beamyIn) #start position of the reflected beam
+            end_pos1=(beamxIn-(beamyIn-self.position()[1]),beamyIn) #end position of the beam (to the mirror inside the image)
+            end_pos2=(beamxIn-(beamyIn-self.position()[1]),BeamRend) #end position of the reflected beam
+            pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
+            pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
         pass
 
 class Beam_splitter(Object):
@@ -190,20 +215,28 @@ class Beam_splitter(Object):
     def TYPE(self):
         return self.type
 
-    def action_beam(self,beamxIn,beamyIn,BeamTRend=0,BeamRend=0, color=(250,0,0)):
+    def action_beam(self,beamxIn,beamyIn,BeamTRend=8000,BeamRend=8000,color=(250,0,0)):
         "Split the beam in two"
-        start_pos1=(beamxIn,beamyIn) #start position of the transmitted beam
-        start_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),beamyIn) #start position of the reflected beam
-        end_pos1=(BeamTRend,beamyIn) #end position of the transmitted beam
-        end_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),BeamRend) #end position of the reflected beam
-        pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
-        pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
+        if self.direction in range(0,10000,2):
+            start_pos1=(beamxIn,beamyIn) #start position of the transmitted beam
+            start_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),beamyIn) #start position of the reflected beam
+            end_pos1=(-BeamTRend,beamyIn) #end position of the transmitted beam
+            end_pos2=(beamxIn+(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]-self.define_size()[0]),-BeamRend) #end position of the reflected beam
+            pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
+            pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
+        elif self.direction in range(1,10000,2):
+            start_pos1=(beamxIn,beamyIn)
+            start_pos2=(beamxIn-(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]),beamyIn) #start position of the reflected beam
+            end_pos1=(-BeamTRend,beamyIn)
+            end_pos2=(beamxIn-(self.define_size()[1]/self.define_size()[0])*(beamyIn-self.position()[1]),BeamRend) #end position of the reflected beam
+            pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
+            pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
 
 class Fiber(Object):
     "Fibre object"
     def __init__(self, scr,pos=(0,0), current=0):
         Object.__init__(self,scr, pos, current)
-        self.pathIm="\Photos_Materiel\ibre1.jpg"
+        self.pathIm="\Photos_Materiel\ibreR.jpg"
         self.load_image(self.pathIm)
         self.type=TYPE_FIBRE
     

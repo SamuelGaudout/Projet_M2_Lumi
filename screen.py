@@ -20,7 +20,6 @@ optical_elements = []
 list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
-Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements),
 Buttons.Button("Fiber",(550, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Fiber(screen),object_list=optical_elements)]
 
 
@@ -44,7 +43,6 @@ while running:
         list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
                 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
                 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
-                Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements),
                 Buttons.Button("Fiber",(550, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Fiber(screen),object_list=optical_elements)]
 
     
@@ -58,20 +56,31 @@ while running:
         for b in list_buttons:
             if event.type == b.click(event):
                 pass
-                
+
+        
+      
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouseX=pygame.mouse.get_pos()[0]
             mouseY=pygame.mouse.get_pos()[1]
             selected_object = select_object(optical_elements, mouseX, mouseY)
+            buRotate=event.button
+            # if selected_object!=None and event.button==3:
+            #     selected_object.rotate_object(angle=90)
         if event.type == pygame.MOUSEBUTTONUP:
             selected_object = None
-    
+        
     b=Objects.Beam(screen,object_list=optical_elements)
-    b.beam_lines_laser(color='red')
+    b.beam_lines_laser(color='red')  
+
+
     
     if selected_object:
         mouseX=pygame.mouse.get_pos()[0]
         mouseY=pygame.mouse.get_pos()[1]
+        if buRotate==3:
+            b.beam_lines_laser(color='erase')
+            selected_object.rotate_object(angle=90)
+        
         b.beam_lines_laser(color='erase')
         selected_object.display(mouseX, mouseY)
         b.beam_lines_laser(color='red')
