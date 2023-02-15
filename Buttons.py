@@ -1,5 +1,6 @@
 import runpy
 import pygame
+from pyrsistent import m
 import Objects
 
 
@@ -81,5 +82,19 @@ class Button_Launch(Button):
                 if self.rect.collidepoint(x, y):
                     self.change_text(self.feedback, "lightblue")
                     self.launch_Screen()
-                   
+
+
+class Button_save(Button):
+   def save(self):
+    pygame.image.save(self.screen, "screenshot.jpg")     
+   
+    
+   def click(self, event):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    self.save()
+
+
  
