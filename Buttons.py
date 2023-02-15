@@ -86,7 +86,7 @@ class Button_Launch(Button):
 
 class Button_save(Button):
    def save(self):
-    pygame.image.save(self.screen, "screenshot.jpg")     
+    pygame.image.save(self.screen, "setup.jpg")     
    
     
    def click(self, event):
