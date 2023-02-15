@@ -1,6 +1,7 @@
 import runpy
 import pygame
 import Objects
+import runpy
 
 
 pygame.init()
@@ -72,7 +73,7 @@ class Button:
 
 class Button_Launch(Button):
     def launch_Screen(self):
-       runpy.run_path("Screen.py")
+       runpy.run_path("screen.py")
     
     def click(self, event):
         x, y = pygame.mouse.get_pos()
