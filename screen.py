@@ -1,6 +1,7 @@
 import pygame
 import Objects
 import Buttons
+import runpy
 
 
 #création de l'interface graphique avec pygame
@@ -37,7 +38,7 @@ running = True
 selected_object = None
 
 while running:
-    
+    pygame.draw.rect(screen, (90,90,90), (0,0,1000,50),width= 0, border_radius=0)
     for b in list_buttons:
         screen.blit(b.surface, b.position())
         list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
