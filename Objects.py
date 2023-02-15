@@ -113,8 +113,15 @@ class Beam():
             if l.type==TYPE_LASER:
                 self.laser_list.append(l)
     
-    def beam_line_objects(self,laser,object,color=(250,0,0)):
-        end_pos=(object.position()[0]+object.define_size()[1],laser.position()[1]+laser.size[0]/2)
+    def beam_line_objects(self,start_pos,object,dir="left",color=(250,0,0)):
+        if dir=="left":
+            end_pos=(object.position()[0]+object.define_size()[1],start_pos[1])
+        elif dir=="right":
+            end_pos=(object.position()[0],start_pos[1])
+        elif dir=="up":
+            end_pos=(start_pos[0],object.position()[1]+object.define_size()[0])
+        elif dir=="down":
+            end_pos=(start_pos[0],object.position()[1])
         object.action_beam(end_pos[0],end_pos[1],color=color)
 
     def check_beam_line(self,laser):
@@ -151,10 +158,10 @@ class Beam():
                 start_pos=(l.position()[0],l.position()[1]+l.size[0]/2)
                 if self.check_beam_line(l)[0]==True:
                     end_pos=self.check_beam_line(l)[1][0].position()
-                    l.action_beam(beamxend=((-1)**(l.dir()+1))*(end_pos[0]+self.check_beam_line(l)[1][0].define_size()[1]),color=color)
+                    beam_laser=l.action_beam(beamxend=((-1)**(l.dir()+1))*(end_pos[0]+self.check_beam_line(l)[1][0].define_size()[1]),color=color)
                     for i in range(len(self.check_beam_line(l)[1])):
                         end_pos=self.check_beam_line(l)[1][i].position()    
-                        self.beam_line_objects(l,self.check_beam_line(l)[1][i],color=color)
+                        self.beam_line_objects(start_pos=start_pos,object=self.check_beam_line(l)[1][i],dir=beam_laser,color=color)
                 else :
                     l.action_beam(color=color)
 
