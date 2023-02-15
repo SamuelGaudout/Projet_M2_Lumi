@@ -1,7 +1,8 @@
 import pygame
 import Objects
 import Buttons
-
+import runpy
+import os 
 
 #création de l'interface graphique avec pygame
 (width, height) = (1000, 800)
@@ -10,17 +11,16 @@ pygame.display.set_caption('Optics Elements')
 background_colour = (200,200,200,0)
 screen.fill(background_colour)
 
-
-print(screen)
+print(type(screen))
 
 optical_elements = []
-
-
 
 list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
-Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements)]
+Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements),
+Buttons.Button("Fiber",(550, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Fiber(screen),object_list=optical_elements),
+Buttons.Button_save("Save",(950, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me")]
 
 
 def select_object(o_elements,x,y):
@@ -37,13 +37,17 @@ running = True
 selected_object = None
 
 while running:
-    
+    pygame.draw.rect(screen, (90,90,90), (0,0,1000,50),width= 0, border_radius=0)
+
+
     for b in list_buttons:
         screen.blit(b.surface, b.position())
         list_buttons=[Buttons.Button("Laser",(10, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Laser(screen),object_list=optical_elements),
                 Buttons.Button("Flat Mirror",(100, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Flat_mirror(screen),object_list=optical_elements),
                 Buttons.Button("Beam Splitter",(230, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Beam_splitter(screen),object_list=optical_elements),
-                Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements)]
+                Buttons.Button("Curve Mirror",(400, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Curve_mirror(screen),object_list=optical_elements),
+                Buttons.Button("Fiber",(550, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me",object=Objects.Fiber(screen),object_list=optical_elements),
+                Buttons.Button_save("Save",(940, 10),font=30,scrn=screen,bg="navy",feedback="You clicked me")]
 
     
     if len(optical_elements) != 0:
