@@ -57,49 +57,6 @@ class Object:
     
         
 
-
-class Beam1():
-    "Create the beam for the different optical elements"
-    def __init__(self,scr,object_list=None):
-        self.screen=scr
-        self.object_list=object_list
-        self.laser_list=[]
-
-    def fill_laser_list(self):
-        "Fill the laser list with the laser objects"
-        for l in self.object_list:
-            if l.type==TYPE_LASER:
-                self.laser_list.append(l)
-
-    def check_intercept_objects(self,xpos_beam,ypos_beam,direction='left'):
-        "Check if the beam is incountering an object"
-        o=0
-        object_intercepted=[]
-        if direction=='right' or direction=='left':
-            for i in range(len(self.object_list)):
-                if self.object_list[i].position()[1]<ypos_beam<self.object_list[i].position()[1]+self.object_list[i].size[0]:
-                    o=+1
-                    object_intercepted.append(self.object_list[i])
-        elif direction=='up' or direction=='down':
-            for i in range(len(self.object_list)):
-                if self.object_list[i].position()[0]<xpos_beam<self.object_list[i].position()[0]+self.object_list[i].size[1]:
-                    o=+1
-                    object_intercepted.append(self.object_list[i])
-        if o>0:       
-            return True,object_intercepted
-        else:
-            return False,None
-
-
-    def beam_line(self,obj,direction='left',color=(250,0,0)):
-        "Draw the beam line coming from an object"
-        if direction=='left':
-            start_pos=(obj.position()[0],obj.position()[1]+obj.size[0]/2)
-            obj.action_beam(start_pos[0],start_pos[1],color=color)
-
-
-
-
 class Beam():
     "Create the beam for the different optical elements"
     def __init__(self,scr,object_list=None):

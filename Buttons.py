@@ -82,4 +82,15 @@ class Button_Launch(Button):
                     self.change_text(self.feedback, "lightblue")
                     self.launch_Screen()
                    
+class Button_save(Button):
+   def save(self):
+    pygame.image.save(self.screen, "setup.jpg")     
+   
+    
+   def click(self, event):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    self.save()
  
