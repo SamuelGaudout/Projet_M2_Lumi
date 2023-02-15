@@ -42,7 +42,7 @@ textRect_2.centery = windowSurface.get_rect().centery + 100
 
 pos=(windowSurface.get_rect().centerx - 100,windowSurface.get_rect().centery + 200)
 
-B1=Buttons.Button_Launch("Lancer l'application",pos,font=30,scrn=windowSurface,bg="blue",feedback="Lancement en Cours")
+B1=Buttons.Button_Launch("Lancer l'application",pos,font=30,scrn=windowSurface,bg="gray")
 
 
 windowSurface.blit(background,(0,-200))

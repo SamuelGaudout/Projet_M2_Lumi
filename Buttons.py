@@ -12,7 +12,7 @@ class Button:
  
     def __init__(self, text,  pos, font,scrn, bg="black", feedback="",object=None,object_list=None):
         self.x, self.y = pos
-        self.font = pygame.font.SysFont("Arial", font)
+        self.font = pygame.font.SysFont("freesansbold.ttf", font)
         self.screen = scrn
         self.object=object
         self.object_list=object_list
