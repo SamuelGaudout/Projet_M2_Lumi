@@ -66,8 +66,6 @@ while running:
             mouseY=pygame.mouse.get_pos()[1]
             selected_object = select_object(optical_elements, mouseX, mouseY)
             buRotate=event.button
-            # if selected_object!=None and event.button==3:
-            #     selected_object.rotate_object(angle=90)
         if event.type == pygame.MOUSEBUTTONUP:
             selected_object = None
         
