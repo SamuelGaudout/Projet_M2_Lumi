@@ -234,7 +234,7 @@ class Fiber(Object):
     "Fibre object"
     def __init__(self, scr,pos=(0,0), current=0):
         Object.__init__(self,scr, pos, current)
-        self.pathIm="\Photos_Materiel\ibreR.jpg"
+        self.pathIm="\Photos_Materiel\ibre.jpg"
         self.load_image(self.pathIm)
         self.type=TYPE_FIBRE
     
