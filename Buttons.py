@@ -1,7 +1,13 @@
 import runpy
 import pygame
-import Objects
 import runpy
+
+'''
+Ce fichier créer les boutons de l'interface graphique de l'application. Les boutons sont des objets de la classe Button qui
+permettent de créer des boutons avec un texte, une position, une couleur de fond, une police d'écriture, une action à effectuer
+lorsque l'on clique sur le bouton, etc. Les boutons sont gérés dans ce fichier et les éléments optiques dans le fichier
+"Objects.py". Les boutons sont créés dans le fichier "screen.py".
+'''
 
 
 pygame.init()

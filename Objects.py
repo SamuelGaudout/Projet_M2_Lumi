@@ -2,6 +2,17 @@ import pygame
 from pygame.locals import *
 import os
 
+'''
+Ce fichier créer les objets de l'application et les fonctions qui leur sont associées. Il y a 5 types d'objets:
+- Laser
+- Miroir plat
+- Miroir courbé
+- Diviseur de faisceau
+- Fibre optique
+A l'avenir, il est possible d'ajouter d'autres types d'objets. 
+Ce fichier est appelé par le script "screen.py" qui est le script principal de l'application.
+'''
+
 
 TYPE_LASER=0
 TYPE_FLAT_MIRROR=1
@@ -11,7 +22,7 @@ TYPE_FIBRE=4
 background_colour = (200,200,200,0)
 
 class Object:
-    "Generic optical element"
+    "Create an object with a position, a current and a size."
     def __init__(self,scr, pos=(0,0), current=0,size=(0,0)):
         self.screen=scr
         self.pos = pos # position of the object
@@ -34,7 +45,7 @@ class Object:
         return self.size
 
     def load_image(self,path_image):
-        "Load an image from a privte file present in a subdirectory"
+        "Load an image from a file present in a subdirectory"
         path=os.getcwd()+path_image     
         self.image.append(pygame.image.load(path))
     
@@ -179,6 +190,8 @@ class Flat_mirror(Object):
             end_pos2=(beamxIn-(beamyIn-self.position()[1]),BeamRend) #end position of the reflected beam
             pygame.draw.line(self.screen, color, start_pos1,end_pos1 , 2)
             pygame.draw.line(self.screen, color, start_pos2,end_pos2 , 2)
+            
+
         if self.direction in range(1,10000,4):
             start_pos1=(beamxIn,beamyIn)
             start_pos2=(beamxIn-self.define_size()[1]+(beamyIn-self.position()[1]),beamyIn)

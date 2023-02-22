@@ -3,6 +3,11 @@ import sys, os
 import Buttons
 from pygame.locals import *
 
+'''
+Ce fichier créer la fenetre de lancement de l'application et le bouton "Lancer l'application" lance le script
+"screen.py" qui est le script principal de l'application
+'''
+
 pygame.init()
 
 

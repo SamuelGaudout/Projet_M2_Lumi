@@ -3,6 +3,17 @@ import Objects
 import Buttons
 
 
+'''
+Ce fichier importe les classes de "Objects.py" et "Buttons.py" et permet de créer l'interface graphique de l'application
+Toutes les actions de l'utilisateur sur l'interface sont gérées dans ce fichier. Le déplacement des éléments, la création
+de nouveaux éléments, la sauvegarde de l'interface, etc. Les boutons sont gérés dans le fichier "Buttons.py" et les éléments
+optiques dans le fichier "Objects.py".
+
+'''
+
+
+
+
 #création de l'interface graphique avec pygame
 (width, height) = (1000, 800)
 screen = pygame.display.set_mode((width, height))
