@@ -22,8 +22,6 @@ background_colour = (200,200,200,0)
 screen.fill(background_colour)
 
 
-print(screen)
-
 optical_elements = []
 
 
@@ -38,7 +36,6 @@ Buttons.Button_save("Save",(930, 20),font=30,scrn=screen,bg="navy")]
 def select_object(o_elements,x,y):
     print(optical_elements)
     for e in o_elements:
-        print(e.define_size()[0])
         if e.position()[0]<=x<=e.position()[0]+e.define_size()[0] and e.position()[1]<=y<=e.position()[1]+e.define_size()[1]:
             print("Trouvé!!")
             return e

@@ -25,9 +25,9 @@ pygame.display.set_icon(icon_32x32)
 pygame.display.set_caption('Application')
 
 #fond de la fenetre
-background = pygame.image.load(os.getcwd()+"\Photos_Materiel\Image.png")
+background = pygame.image.load(os.getcwd()+"\Photos_Materiel\Background.jpg")
+#background = pygame.transform.scale(background, (1233, 925))
 
-background = pygame.transform.scale(background, (1233, 925))
 #texte
 font = pygame.font.SysFont("Verdana", 72)
 font_1= pygame.font.SysFont("Verdana", 48)
@@ -39,18 +39,18 @@ textRect = text.get_rect()
 textRect_1 = text_1.get_rect()
 textRect_2 = text_2.get_rect()
 textRect.centerx = windowSurface.get_rect().centerx
-textRect.centery = windowSurface.get_rect().centery - 100
+textRect.centery = windowSurface.get_rect().centery - 200
 textRect_1.centerx = windowSurface.get_rect().centerx
 textRect_1.centery = windowSurface.get_rect().centery - 300
 textRect_2.centerx = windowSurface.get_rect().centerx
-textRect_2.centery = windowSurface.get_rect().centery + 100
+textRect_2.centery = windowSurface.get_rect().centery + 200
 
-pos=(windowSurface.get_rect().centerx - 100,windowSurface.get_rect().centery + 200)
+pos=(windowSurface.get_rect().centerx - 100,windowSurface.get_rect().centery + 250)
 
 B1=Buttons.Button_Launch("Lancer l'application",pos,font=30,scrn=windowSurface,bg="gray")
 
 
-windowSurface.blit(background,(0,-200))
+windowSurface.blit(background,(0,0))
 windowSurface.blit(text, textRect)
 windowSurface.blit(text_1, textRect_1)
 windowSurface.blit(text_2, textRect_2)
